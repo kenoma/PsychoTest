@@ -1,0 +1,1 @@
+D:\projects\mongo\bin\mongod.exe --dbpath %~dp0db

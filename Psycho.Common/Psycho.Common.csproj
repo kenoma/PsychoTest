@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3792F569-FF5B-476D-AF35-C273974C134D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Psycho.Common</RootNamespace>
+    <AssemblyName>Psycho.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="CommonConfig.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>CommonConfig.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Analysis\FlatUserToVectorMapping.cs" />
+    <Compile Include="Analysis\Model\FlatUser.cs" />
+    <Compile Include="CommonConfig.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>CommonConfig.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\AdminArea\ServiceUser.cs" />
+    <Compile Include="Domain\IAggregateRoot.cs" />
+    <Compile Include="Domain\Questionnaire\Guts\QuestionnaireEntry.cs" />
+    <Compile Include="Domain\Questionnaire\Guts\QuestionnaireEntryAnswer.cs" />
+    <Compile Include="Domain\Questionnaire\Guts\QuestionnaireMapping.cs" />
+    <Compile Include="Domain\Questionnaire\Guts\QuestionnaireOutcome.cs" />
+    <Compile Include="Domain\Questionnaire\QuestionnaireScope.cs" />
+    <Compile Include="Domain\UserData\Guts\ActivityCode.cs" />
+    <Compile Include="Domain\UserData\Guts\ActivityData.cs" />
+    <Compile Include="Domain\UserData\Guts\CongruenceOutcome.cs" />
+    <Compile Include="Domain\UserData\Guts\ExtendedQuestionnaireChoices.cs" />
+    <Compile Include="Domain\UserData\Guts\PermanentCongruenceResults.cs" />
+    <Compile Include="Domain\UserData\Guts\PermanentResults.cs" />
+    <Compile Include="Domain\UserData\Guts\SocialNetworkDataFacebook.cs" />
+    <Compile Include="Domain\UserData\Guts\SocialNetworkDataVK.cs" />
+    <Compile Include="Domain\UserData\Guts\QuestionnaireChoices.cs" />
+    <Compile Include="Domain\UserData\RespondentUser.cs" />
+    <Compile Include="Gathering\Models\Attachment.cs" />
+    <Compile Include="Gathering\Models\Audio.cs" />
+    <Compile Include="Gathering\Models\Career.cs" />
+    <Compile Include="Gathering\Models\Category.cs" />
+    <Compile Include="Gathering\Models\City.cs" />
+    <Compile Include="Gathering\Models\Comments.cs" />
+    <Compile Include="Gathering\Models\Contact.cs" />
+    <Compile Include="Gathering\Models\CopyHistory.cs" />
+    <Compile Include="Gathering\Models\Country.cs" />
+    <Compile Include="Gathering\Models\Currency.cs" />
+    <Compile Include="Gathering\Models\Doc.cs" />
+    <Compile Include="Gathering\Models\GroupData.cs" />
+    <Compile Include="Gathering\Models\LastSeen.cs" />
+    <Compile Include="Gathering\Models\Likes.cs" />
+    <Compile Include="Gathering\Models\Link.cs" />
+    <Compile Include="Gathering\Models\Market.cs" />
+    <Compile Include="Gathering\Models\Military.cs" />
+    <Compile Include="Gathering\Models\Note.cs" />
+    <Compile Include="Gathering\Models\Occupation.cs" />
+    <Compile Include="Gathering\Models\Personal.cs" />
+    <Compile Include="Gathering\Models\Photo.cs" />
+    <Compile Include="Gathering\Models\Place.cs" />
+    <Compile Include="Gathering\Models\PostSource.cs" />
+    <Compile Include="Gathering\Models\Price.cs" />
+    <Compile Include="Gathering\Models\Profile.cs" />
+    <Compile Include="Gathering\Models\RelationPartner.cs" />
+    <Compile Include="Gathering\Models\Relative.cs" />
+    <Compile Include="Gathering\Models\Reposts.cs" />
+    <Compile Include="Gathering\Models\Repo\DataChunk.cs" />
+    <Compile Include="Gathering\Models\Repo\UserGetMetaDTO.cs" />
+    <Compile Include="Gathering\Models\Repo\WallPostDataChunk .cs" />
+    <Compile Include="Gathering\Models\School.cs" />
+    <Compile Include="Gathering\Models\Section.cs" />
+    <Compile Include="Gathering\Models\StatusAudio.cs" />
+    <Compile Include="Gathering\Models\University.cs" />
+    <Compile Include="Gathering\Models\UserGet.cs" />
+    <Compile Include="Gathering\Models\Video.cs" />
+    <Compile Include="Gathering\Models\WallPost.cs" />
+    <Compile Include="Gathering\Models\WallResponse.cs" />
+    <Compile Include="Rebus\RebusLoggerFactory.cs" />
+    <Compile Include="Rebus\ServiceBusHelper.cs" />
+    <Compile Include="Repository\IQuestionnaireRepository.cs" />
+    <Compile Include="Repository\IRespondentsRepository.cs" />
+    <Compile Include="Repository\IServiceUserRepository.cs" />
+    <Compile Include="Service\CallerInfo.cs" />
+    <Compile Include="Service\DTO\DTOConciseQuestionnaireScope.cs" />
+    <Compile Include="Service\IQuestionnaireService.cs" />
+    <Compile Include="Service\ObjectIdConverter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MongoDB.Bson, Version=2.4.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.4.4\lib\net45\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.4.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.2.4.4\lib\net45\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.4.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.4.4\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.GridFS, Version=2.4.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.GridFS.2.4.4\lib\net45\MongoDB.Driver.GridFS.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net, Version=2.3.2.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\packages\protobuf-net.2.3.2\lib\net40\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\RabbitMQ.Client.4.1.1\lib\net451\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Rebus, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rebus.4.1.0\lib\net45\Rebus.dll</HintPath>
+    </Reference>
+    <Reference Include="Rebus.MongoDb, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rebus.MongoDb.4.0.0\lib\net45\Rebus.MongoDb.dll</HintPath>
+    </Reference>
+    <Reference Include="Rebus.Protobuf, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rebus.Protobuf.4.0.0\lib\net45\Rebus.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="Rebus.RabbitMq, Version=4.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rebus.RabbitMq.4.1.1\lib\net452\Rebus.RabbitMq.dll</HintPath>
+    </Reference>
+    <Reference Include="Rebus.Serilog, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rebus.Serilog.4.0.0\lib\net45\Rebus.Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.2.4.0\lib\net46\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props'))" />
+  </Target>
+</Project>
