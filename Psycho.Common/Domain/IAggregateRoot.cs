@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 [assembly: InternalsVisibleTo("Psycho.UnitTests")]
 namespace Psycho.Common.Domain
 {
-    interface IAggregateRoot
+    public interface IAggregateRoot
     {
         long Id { get; }
     }

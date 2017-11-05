@@ -9,10 +9,13 @@
       <Value Profile="(Default)">Fnm343AVaIHhlJxUtn15</Value>
     </Setting>
     <Setting Name="ServiceBusMaxParallelism" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">50</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="ServiceBusNumberOfWorkers" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">50</Value>
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="SeqServer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:5341</Value>
     </Setting>
   </Settings>
 </SettingsFile>

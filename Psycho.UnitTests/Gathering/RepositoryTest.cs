@@ -1,5 +1,4 @@
-﻿using FizzWare.NBuilder;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using NSubstitute;
 using NUnit.Framework;
 using Psycho.Gathering.Implementations;
@@ -12,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using Serilog;
+using Ploeh.AutoFixture;
 
 namespace Psycho.UnitTests.Gathering
 {
@@ -20,10 +20,12 @@ namespace Psycho.UnitTests.Gathering
     {
         private ILogger subLogger;
         private ICompressor subCompress;
+        private Fixture _fixture;
 
         [SetUp]
         public void TestInitialize()
         {
+            _fixture = new Fixture();
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
             subLogger = Substitute.For<ILogger>();
             subCompress = Substitute.For<ICompressor>();
@@ -52,9 +54,9 @@ namespace Psycho.UnitTests.Gathering
         public void GetUser_FileStored()
         {
             var repo = CreateRepository();
-            var sample = Builder<UserGet>.CreateNew()
+            var sample = _fixture.Build<UserGet>()
                 .With(z => z.Friends, new List<UserGet> { new UserGet(), new UserGet() })
-                .Build();
+                .Create();
 
             repo.SaveUser(sample, DateTime.Now);
             Thread.Sleep(1000);

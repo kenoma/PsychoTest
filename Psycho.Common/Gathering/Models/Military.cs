@@ -1,4 +1,5 @@
 ﻿using ProtoBuf;
+using Psycho.Common.Repository.Local;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace Psycho.Gathering.Models
 {
     [ProtoContract, DataContract]
-    public class Military
+    public class Military : ILocalAggregateRoot
     {
         [DataMember, ProtoMember(1)]
         public string unit { get; set; }
@@ -17,5 +18,8 @@ namespace Psycho.Gathering.Models
         public int unit_id { get; set; }
         [DataMember, ProtoMember(3)]
         public int country_id { get; set; }
+
+        [IgnoreDataMember, ProtoIgnore]
+        public int id { get; set; }
     }
 }

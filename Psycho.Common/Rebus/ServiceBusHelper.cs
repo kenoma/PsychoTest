@@ -71,6 +71,8 @@ namespace Psycho.Common.Rebus
                      o.EnableEncryption(CommonConfig.Default.SecretKey);
                      o.EnableCompression(2048);
                      o.SimpleRetryStrategy(maxDeliveryAttempts: 3);
+                     o.SetMaxParallelism(CommonConfig.Default.ServiceBusMaxParallelism);
+                     o.SetNumberOfWorkers(CommonConfig.Default.ServiceBusNumberOfWorkers);
                  })
                  .Start();
         }

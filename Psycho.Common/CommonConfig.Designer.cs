@@ -49,7 +49,7 @@ namespace Psycho.Common {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int ServiceBusMaxParallelism {
             get {
                 return ((int)(this["ServiceBusMaxParallelism"]));
@@ -61,13 +61,25 @@ namespace Psycho.Common {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int ServiceBusNumberOfWorkers {
             get {
                 return ((int)(this["ServiceBusNumberOfWorkers"]));
             }
             set {
                 this["ServiceBusNumberOfWorkers"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:5341")]
+        public string SeqServer {
+            get {
+                return ((string)(this["SeqServer"]));
+            }
+            set {
+                this["SeqServer"] = value;
             }
         }
     }
