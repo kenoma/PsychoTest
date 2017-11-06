@@ -13,9 +13,8 @@ namespace Psycho.Common.Rebus
         public RebusLog()
         {
             _log = new LoggerConfiguration()
-                .MinimumLevel.Verbose()
+                .MinimumLevel.Warning()
                 .WriteTo.LiterateConsole()
-                .WriteTo.Seq(CommonConfig.Default.SeqServer, compact: true)
                 .CreateLogger();
         }
 

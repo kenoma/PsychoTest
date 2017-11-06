@@ -32,14 +32,14 @@ namespace Psycho.Common.Rebus
                  .Serialization(s =>
                  s.UseProtobuf()
                  )
-                 .Transport(t => t.UseRabbitMqAsOneWayClient(CommonConfig.Default.RabbitMqConnectionString))
+                 .Transport(t => t.UseRabbitMqAsOneWayClient(config.Default.RabbitMqConnectionString))
                  .Options(o =>
                  {
-                     o.EnableEncryption(CommonConfig.Default.SecretKey);
+                     o.EnableEncryption(config.Default.SecretKey);
                      o.EnableCompression(2048);
                      o.SimpleRetryStrategy(maxDeliveryAttempts: 3);
-                     o.SetMaxParallelism(CommonConfig.Default.ServiceBusMaxParallelism);
-                     o.SetNumberOfWorkers(CommonConfig.Default.ServiceBusNumberOfWorkers);
+                     o.SetMaxParallelism(config.Default.ServiceBusMaxParallelism);
+                     o.SetNumberOfWorkers(config.Default.ServiceBusNumberOfWorkers);
                  })
                  .Start();
         }
@@ -65,14 +65,14 @@ namespace Psycho.Common.Rebus
             return Configure.With(container)
                  .Logging(l => l.Use(new RebusLoggerFactory()))
                  .Serialization(s =>s.UseProtobuf())
-                 .Transport(t => t.UseRabbitMq(CommonConfig.Default.RabbitMqConnectionString, consumer))
+                 .Transport(t => t.UseRabbitMq(config.Default.RabbitMqConnectionString, consumer))
                  .Options(o =>
                  {
-                     o.EnableEncryption(CommonConfig.Default.SecretKey);
+                     o.EnableEncryption(config.Default.SecretKey);
                      o.EnableCompression(2048);
                      o.SimpleRetryStrategy(maxDeliveryAttempts: 3);
-                     o.SetMaxParallelism(CommonConfig.Default.ServiceBusMaxParallelism);
-                     o.SetNumberOfWorkers(CommonConfig.Default.ServiceBusNumberOfWorkers);
+                     o.SetMaxParallelism(config.Default.ServiceBusMaxParallelism);
+                     o.SetNumberOfWorkers(config.Default.ServiceBusNumberOfWorkers);
                  })
                  .Start();
         }

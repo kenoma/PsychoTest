@@ -43,7 +43,9 @@ namespace Psycho.Laborer.Repo
             return _mapper.Map<CareerDb>(item);
         }
 
-       
-
+        internal Career[] FindByUserId(IDbConnection cn, int userGetid)
+        {
+            return cn.Query<Career>($"SELECT id, group_id, country_id, city_id FROM {_tableName} WHERE UserGetId=@Id", new { Id = userGetid }).ToArray();
+        }
     }
 }

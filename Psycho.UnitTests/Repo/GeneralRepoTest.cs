@@ -8,6 +8,7 @@ using Psycho.Laborer.Repo;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Psycho.UnitTests.Repo
 {
@@ -32,14 +33,18 @@ namespace Psycho.UnitTests.Repo
         }
 
         [Test]
-        public void Add_FindById()
+        public void Add_FindById_CheckEmptyRecord()
         {
             var repo = this.CreateRepo();
             var stub = _fixture.Build<UserGet>()
-              .With(z => z.Friends, new List<UserGet>())
-              .With(z => z.Subscriptions, new List<UserGet>())
-              .With(z => z.Followers, new List<UserGet>())
-              .With(z => z.Groups, new List<GroupData>())
+              .With(z => z.Friends, null)
+              .With(z => z.Subscriptions, null)
+              .With(z => z.Followers, null)
+              .With(z => z.Groups, null)
+              .With(z => z.WallPosts, null)
+              .With(z => z.profiles, null)
+              .With(z => z.wallGroups, null)
+              .With(z => z.GroupIds, new List<int>())
               .Create();
 
             repo.Save(stub);

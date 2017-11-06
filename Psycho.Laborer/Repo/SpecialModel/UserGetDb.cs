@@ -18,26 +18,26 @@ namespace Psycho.Laborer.Repo.SpecialModel
         public string domain { get; internal set; }
         public string nickname { get; internal set; }
         public string maiden_name { get; internal set; }
-        public byte sex { get; internal set; }
+        public int sex { get; internal set; }
         public string screen_name { get; internal set; }
         public string photo_id { get; internal set; }
-        public byte has_photo { get; internal set; }
-        public byte has_mobile { get; internal set; }
-        public byte friend_status { get; internal set; }
-        public byte online { get; internal set; }
+        public int has_photo { get; internal set; }
+        public int has_mobile { get; internal set; }
+        public int friend_status { get; internal set; }
+        public int online { get; internal set; }
         public int wall_comments { get; internal set; }
-        public byte can_post { get; internal set; }
-        public byte can_see_all_posts { get; internal set; }
-        public byte can_see_audio { get; internal set; }
-        public byte can_write_private_message { get; internal set; }
-        public byte can_send_friend_request { get; internal set; }
+        public int can_post { get; internal set; }
+        public int can_see_all_posts { get; internal set; }
+        public int can_see_audio { get; internal set; }
+        public int can_write_private_message { get; internal set; }
+        public int can_send_friend_request { get; internal set; }
         public string site { get; internal set; }
         public string status { get; internal set; }
-        public byte verified { get; internal set; }
+        public int verified { get; internal set; }
         public int followers_count { get; internal set; }
         public int blacklisted { get; internal set; }
-        public byte is_favorite { get; internal set; }
-        public byte is_hidden_from_feed { get; internal set; }
+        public int is_favorite { get; internal set; }
+        public int is_hidden_from_feed { get; internal set; }
         public int common_count { get; internal set; }
         public string mobile_phone { get; internal set; }
         public int university { get; internal set; }
@@ -65,7 +65,7 @@ namespace Psycho.Laborer.Repo.SpecialModel
         public string twitter { get; internal set; }
         public int LastSeenTime { get; internal set; }
         public int LastSeenPlatform { get; internal set; }
-        public double? OccupationId { get; internal set; }
+        public int? OccupationId { get; internal set; }
         public int? CityId { get; internal set; }
         public int? CountryId { get; internal set; }
         public string PersonalReligion { get; internal set; }

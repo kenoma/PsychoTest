@@ -24,5 +24,10 @@ namespace Psycho.Laborer.Repo
             cn.Execute(SqliteHelpers.GetInsertQuery(_tableName, parameters, "id"), parameters);
             item.id = cn.QuerySingle<int>("SELECT last_insert_rowid();");
         }
+
+        internal int[] FindByUserId(IDbConnection cn, int userGetid)
+        {
+            return cn.Query<int>($"SELECT SchoolId FROM {_tableName} WHERE UserGetId=@Id", new { Id = userGetid }).ToArray();
+        }
     }
 }

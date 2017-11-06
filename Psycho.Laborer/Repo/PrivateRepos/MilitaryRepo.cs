@@ -48,5 +48,10 @@ namespace Psycho.Laborer.Repo
         {
             return _mapper.Map<MilitaryDb>(item);
         }
+
+        internal Military[] FindByUserId(IDbConnection cn, int userGetid)
+        {
+            return cn.Query<Military>($"SELECT unit, unit_id, country_id, id FROM {_tableName} WHERE UserGetId=@Id", new { Id = userGetid }).ToArray();
+        }
     }
 }

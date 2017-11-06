@@ -11,6 +11,7 @@ CREATE TABLE "Country" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Country" PRIMARY KEY,
 	"Name" TEXT 
 );
+
 CREATE TABLE "Career" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Career" PRIMARY KEY AUTOINCREMENT,
 	"UserGetId" INTEGER NOT NULL,
@@ -19,10 +20,9 @@ CREATE TABLE "Career" (
 	"city_id" INTEGER NOT NULL,
 	
 	CONSTRAINT SingleCareerRecord UNIQUE (UserGetId, group_id, city_id) ON CONFLICT REPLACE,
-	FOREIGN KEY(UserGetId) REFERENCES UserGet(id),
-	FOREIGN KEY(country_id) REFERENCES Country(id),
-	FOREIGN KEY(city_id) REFERENCES City(id)
+	FOREIGN KEY(UserGetId) REFERENCES UserGet(id) ON DELETE CASCADE
 );
+
 CREATE TABLE "Military" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Military" PRIMARY KEY AUTOINCREMENT,
 	"UserGetId" INTEGER NOT NULL,
@@ -31,8 +31,7 @@ CREATE TABLE "Military" (
 	"Country_Id" INTEGER NOT NULL,
 	
 	CONSTRAINT SingleCareerRecord UNIQUE (UserGetId, unit_id, Country_Id) ON CONFLICT REPLACE,
-	FOREIGN KEY(UserGetId) REFERENCES UserGet(id),
-	FOREIGN KEY(Country_Id) REFERENCES Country(id)
+	FOREIGN KEY(UserGetId) REFERENCES UserGet(id) ON DELETE CASCADE
 );
 
 CREATE TABLE "University" (
@@ -45,9 +44,7 @@ CREATE TABLE "University" (
     "chair" INTEGER,
     "chair_name" TEXT,
     "education_form" TEXT,
-    "education_status" TEXT,
-    FOREIGN KEY(country) REFERENCES Country(id),
-    FOREIGN KEY(city) REFERENCES City(id)
+    "education_status" TEXT
 );
 CREATE TABLE "School" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_School" PRIMARY KEY,
@@ -55,9 +52,7 @@ CREATE TABLE "School" (
     "City" INTEGER,
     "name" TEXT,
 	"class" TEXT,
-	"speciality" TEXT,
-    FOREIGN KEY(Country) REFERENCES Country(id),
-    FOREIGN KEY(City) REFERENCES City(id)
+	"speciality" TEXT
 );
 
 CREATE TABLE "UserUniversity" (
@@ -67,8 +62,7 @@ CREATE TABLE "UserUniversity" (
 	"UniversityId" INTEGER, 
     
 	CONSTRAINT SingleCareerRecord UNIQUE (UserGetId, UniversityId) ON CONFLICT REPLACE,
-	FOREIGN KEY(UserGetId) REFERENCES UserGet(id),
-	FOREIGN KEY(UniversityId) REFERENCES University(id)
+	FOREIGN KEY(UserGetId) REFERENCES UserGet(id) ON DELETE CASCADE
 );
 
 CREATE TABLE "UserSchool" (
@@ -78,8 +72,7 @@ CREATE TABLE "UserSchool" (
 	"SchoolId" INTEGER, 
     
 	CONSTRAINT SingleCareerRecord UNIQUE (UserGetId, SchoolId) ON CONFLICT REPLACE,
-	FOREIGN KEY(UserGetId) REFERENCES UserGet(id),
-	FOREIGN KEY(SchoolId) REFERENCES School(id)
+	FOREIGN KEY(UserGetId) REFERENCES UserGet(id) ON DELETE CASCADE
 );
 
 
@@ -91,7 +84,7 @@ CREATE TABLE "Relative" (
 	"Type" TEXT, 
     
 	CONSTRAINT SingleCareerRecord UNIQUE (Id, UserGetId) ON CONFLICT REPLACE,
-	FOREIGN KEY(UserGetId) REFERENCES UserGet(id)
+	FOREIGN KEY(UserGetId) REFERENCES UserGet(id) ON DELETE CASCADE
 );
 CREATE TABLE "FriendsFollowersSubscriptions" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_FriendsFollowersSubscriptions" PRIMARY KEY AUTOINCREMENT,
@@ -101,9 +94,9 @@ CREATE TABLE "FriendsFollowersSubscriptions" (
 	"RelationsType" INTEGER NOT NULL,
     
 	CONSTRAINT SingleCareerRecord UNIQUE (UserGetId, SubjectId) ON CONFLICT REPLACE,
-	FOREIGN KEY(UserGetId) REFERENCES UserGet(id),
-	FOREIGN KEY(SubjectId) REFERENCES UserGet(id)
+	FOREIGN KEY(UserGetId) REFERENCES UserGet(id) ON DELETE CASCADE
 );
+
 CREATE TABLE "UserGroups" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_UserGroups" PRIMARY KEY AUTOINCREMENT,
 	
@@ -111,8 +104,49 @@ CREATE TABLE "UserGroups" (
 	"GroupId" INTEGER NOT NULL,
 	
 	CONSTRAINT SingleCareerRecord UNIQUE (UserGetId, GroupId) ON CONFLICT REPLACE,
-	FOREIGN KEY(UserGetId) REFERENCES UserGet(id)
+	FOREIGN KEY(UserGetId) REFERENCES UserGet(id) ON DELETE CASCADE
 );
+
+CREATE TABLE "UserGroupActivity" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_UserGroupActivity" PRIMARY KEY AUTOINCREMENT,
+	
+	"UserGetId" INTEGER NOT NULL,
+	"GroupId" INTEGER NOT NULL,
+	"WallPostId" INTEGER NOT NULL,
+	"ActivityType" INTEGER NOT NULL,
+	"PostType" TEXT,
+
+	CONSTRAINT SingleCareerRecord UNIQUE (UserGetId, WallPostId, ActivityType) ON CONFLICT IGNORE,
+	FOREIGN KEY(UserGetId) REFERENCES UserGet(id) ON DELETE CASCADE
+);
+
+CREATE TABLE "WallPost" 
+(
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_WallPost" PRIMARY KEY AUTOINCREMENT,
+
+	"UserGetId" INTEGER NOT NULL,
+	"from_id" INTEGER NOT NULL,
+	"owner_id" INTEGER NOT NULL,
+	"date" INTEGER NOT NULL,
+	"post_type" TEXT,
+	"post_text" TEXT,
+	"is_pinned" INTEGER NOT NULL,
+
+	CONSTRAINT SingleCareerRecord UNIQUE (UserGetId, date) ON CONFLICT IGNORE,
+	FOREIGN KEY(UserGetId) REFERENCES UserGet(id) ON DELETE CASCADE
+);
+
+CREATE TABLE "Antibot" 
+(
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_Antibot" PRIMARY KEY AUTOINCREMENT,
+
+	"UserGetId" INTEGER NOT NULL,
+	"is_bot" INTEGER NOT NULL,
+
+	CONSTRAINT SingleCareerRecord UNIQUE (UserGetId, is_bot) ON CONFLICT IGNORE,
+	FOREIGN KEY(UserGetId) REFERENCES UserGet(id) ON DELETE CASCADE
+);
+
 CREATE TABLE "UserGet" (
 	"id" INTEGER NOT NULL CONSTRAINT "PK_Userget" PRIMARY KEY,
     "first_name" TEXT,
@@ -143,7 +177,7 @@ CREATE TABLE "UserGet" (
     "is_favorite" INTEGER, 
     "is_hidden_from_feed" INTEGER, 
     "common_count" INTEGER,
-	"OccupationId" REAL,
+	"OccupationId" INTEGER,
     "CityId" INTEGER,  
     "CountryId" INTEGER,
     "mobile_phone" TEXT,  

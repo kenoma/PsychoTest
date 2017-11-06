@@ -20,6 +20,7 @@ namespace Psycho.Laborer.Infrastructure
             _log = log;
             _log.Information("Get proxy list...");
             _fineproxyUrl = fineproxyUrl;
+            _proxyAddress = new IWebProxy[] { null };
         }
 
         public IWebProxy[] RetrieveProxyList()

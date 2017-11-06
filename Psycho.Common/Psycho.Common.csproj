@@ -40,19 +40,19 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="CommonConfig.settings">
+    <None Include="config.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>CommonConfig.Designer.cs</LastGenOutput>
+      <LastGenOutput>config.Designer.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analysis\FlatUserToVectorMapping.cs" />
     <Compile Include="Analysis\Model\FlatUser.cs" />
-    <Compile Include="CommonConfig.Designer.cs">
+    <Compile Include="config.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>CommonConfig.settings</DependentUpon>
+      <DependentUpon>config.settings</DependentUpon>
     </Compile>
     <Compile Include="Domain\AdminArea\ServiceUser.cs" />
     <Compile Include="Domain\IAggregateRoot.cs" />
@@ -121,7 +121,9 @@
     <Compile Include="Service\DTO\DTOConciseQuestionnaireScope.cs" />
     <Compile Include="Service\IQuestionnaireService.cs" />
     <Compile Include="Service\LogHelper.cs" />
-    <Compile Include="Service\Messages\MessageGetGroupLikesRepostsComments.cs" />
+    <Compile Include="Service\Messages\MessageExtractWallPostsCommand.cs" />
+    <Compile Include="Service\Messages\MessageUserGet.cs" />
+    <Compile Include="Service\Messages\MessageWallPostLikesRepostsComments.cs" />
     <Compile Include="Service\ObjectIdConverter.cs" />
   </ItemGroup>
   <ItemGroup>

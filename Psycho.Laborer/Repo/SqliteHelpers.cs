@@ -1,6 +1,7 @@
 ﻿
 using Dapper;
 using Psycho.Laborer.Repo.Script;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -44,10 +45,18 @@ namespace Psycho.Common.Repository.Local
 
         static public void EnsureCreated(string connectionString)
         {
-            using (var conn = new SQLiteConnection(connectionString))
+            try
             {
-                conn.Open();
-                conn.Execute(Queries.CreateDb);
+                using (var conn = new SQLiteConnection(connectionString))
+                {
+                    conn.Open();
+                    conn.Execute(Queries.CreateDb);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, ex.Message);
+                throw;
             }
         }
 

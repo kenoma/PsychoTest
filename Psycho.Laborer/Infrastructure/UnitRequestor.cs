@@ -20,7 +20,7 @@ namespace Psycho.Laborer.Infrastructure
         public int RequestCounter { get; set; }
         public DateTime LastRequest { get; private set; } = DateTime.Now;
         public bool IsSpoiled { get; private set; }
-
+        private readonly JsonSerializerSettings _jsonSettings =new JsonSerializerSettings { Error = HandleDeserializationError };
         private readonly object _locker = new object();
 
         public T GetRequest<T>(string method,object queryParams)
@@ -32,13 +32,13 @@ namespace Psycho.Laborer.Infrastructure
                     .SetQueryParams(queryParams)
                     .SetQueryParam("access_token", VkKey)
                     .SetQueryParam("v", "5.67")
-                    .ToString(true);
+                    .ToString(false);
 
                 var resp = Request(requestText);
                 if (string.IsNullOrEmpty(resp))
                     return default(T);
 
-                return JsonConvert.DeserializeObject<T>(resp);
+                return JsonConvert.DeserializeObject<T>(resp, _jsonSettings);
             }
             catch (Exception ex)
             {
@@ -80,6 +80,13 @@ namespace Psycho.Laborer.Infrastructure
 
                 return html;
             }
+        }
+
+        static void HandleDeserializationError(object sender, Newtonsoft.Json.Serialization.ErrorEventArgs errorArgs)
+        {
+            var currentError = errorArgs.ErrorContext.Error.Message;
+            errorArgs.ErrorContext.Handled = true;
+            Log.Error(currentError);
         }
     }
 }

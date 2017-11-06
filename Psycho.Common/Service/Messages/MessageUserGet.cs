@@ -8,12 +8,9 @@ using System.Threading.Tasks;
 namespace Psycho.Common.Service.Messages
 {
     [ProtoContract]
-    public class MessageGetGroupLikesRepostsComments
+    public class MessageUserGet
     {
         [ProtoMember(1)]
-        public int GroupId { get; set; }
-
-        [ProtoMember(2)]
-        public int PostCount { get; set; }
+        public int UserGetId { get; set; }
     }
 }

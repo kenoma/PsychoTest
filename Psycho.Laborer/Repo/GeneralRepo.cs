@@ -1,5 +1,7 @@
 ﻿using Psycho.Gathering.Models;
+using Psycho.Laborer.Repo.PrivateRepos;
 using Psycho.Laborer.Repo.SpecialModel;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,7 +27,9 @@ namespace Psycho.Laborer.Repo
         private UserGroupsRepo _userGroupsRepo;
         private UserSchoolRepo _userSchoolRepo;
         private UserUniversityRepo _userUniversityRepo;
+        private UserGroupActivityRepo _userGroupActivityRepo;
         private string _connectionString;
+        private WallPostRepo _wallPostRepo;
 
         public GeneralRepo(string connectionString)
         {
@@ -43,6 +47,8 @@ namespace Psycho.Laborer.Repo
             _userGroupsRepo = new UserGroupsRepo();
             _userSchoolRepo = new UserSchoolRepo();
             _userUniversityRepo = new UserUniversityRepo();
+            _userGroupActivityRepo = new UserGroupActivityRepo();
+            _wallPostRepo = new WallPostRepo();
         }
 
         public void Save(UserGet user)
@@ -69,11 +75,14 @@ namespace Psycho.Laborer.Repo
 
                     _userGetRepo.Add(cn, user);
 
+                    if (user.WallPosts?.Any() ?? false)
+                        foreach (var wallPost in user.WallPosts)
+                            _wallPostRepo.Add(cn, user.id, wallPost);
+
                     if (user.military?.Any() ?? false)
                         foreach (var military in user.military)
                         {
-                            _countryRepo.Add(cn, new Country { id = military.country_id });
-                            _militaryRepo.Add(cn, military);
+                            _militaryRepo.Add(cn, user.id, military);
                         }
 
                     if (user.universities?.Any() ?? false)
@@ -97,25 +106,37 @@ namespace Psycho.Laborer.Repo
                         foreach (var s in user.Friends)
                         {
                             _friendsFollowersSubscriptionsRepo.Add(cn, new FriendsFollowersSubscriptions { UserGetId = user.id, SubjectId = s.id, RelationsType = FFSType.Friend });
+                            //_userGetRepo.Add(cn, s);
                         }
 
                     if (user.Followers?.Any() ?? false)
                         foreach (var s in user.Followers)
                         {
                             _friendsFollowersSubscriptionsRepo.Add(cn, new FriendsFollowersSubscriptions { UserGetId = user.id, SubjectId = s.id, RelationsType = FFSType.Follower });
+                            //_userGetRepo.Add(cn, s);
                         }
 
                     if (user.Subscriptions?.Any() ?? false)
                         foreach (var s in user.Subscriptions)
                         {
                             _friendsFollowersSubscriptionsRepo.Add(cn, new FriendsFollowersSubscriptions { UserGetId = user.id, SubjectId = s.id, RelationsType = FFSType.Subscriber });
+                            //_userGetRepo.Add(cn, s);
                         }
+
+                    var groups = new HashSet<int>();
 
                     if (user.Groups?.Any() ?? false)
                         foreach (var g in user.Groups)
-                        {
-                            _userGroupsRepo.Add(cn, new UserGroups { UserGetId = user.id, GroupId = g.id });
-                        }
+                            if (!groups.Contains(g.id))
+                                groups.Add(g.id);
+
+                    if (user.GroupIds?.Any() ?? false)
+                        foreach (var g in user.GroupIds)
+                            if (!groups.Contains(g))
+                                groups.Add(g);
+
+                    foreach (var g in groups)
+                        _userGroupsRepo.Add(cn, new UserGroups { UserGetId = user.id, GroupId = g });
 
                     if (user.relatives?.Any() ?? false)
                         foreach (var rel in user.relatives)
@@ -126,8 +147,6 @@ namespace Psycho.Laborer.Repo
                     if (user.career?.Any() ?? false)
                         foreach (var career in user.career)
                         {
-                            _cityRepo.Add(cn, new City { id = career.city_id });
-                            _countryRepo.Add(cn, new Country { id = career.country_id });
                             _careerRepo.Add(cn, user.id, career);
                         }
 
@@ -138,7 +157,68 @@ namespace Psycho.Laborer.Repo
 
         internal UserGet FindById(int userGetid)
         {
-            throw new NotImplementedException();
+            using (IDbConnection cn = new SQLiteConnection(_connectionString))
+            {
+                cn.Open();
+                var user = _userGetRepo.FindById(cn, userGetid);
+                if (user == null)
+                    return user;
+
+                user.career = new List<Career>(_careerRepo.FindByUserId(cn, userGetid));
+                user.relatives = new List<Relative>(_relativeRepo.FindByUserId(cn, userGetid));
+                user.military = new List<Military>(_militaryRepo.FindByUserId(cn, userGetid));
+
+                var groupList = _userGroupsRepo.FindByUserId(cn, userGetid);
+                user.GroupIds = new List<int>(groupList);
+
+                var schoolList = _userSchoolRepo.FindByUserId(cn, userGetid);
+                user.schools = new List<School>();
+                foreach (var school in schoolList)
+                    user.schools.Add(_schoolRepo.FindById(cn, school));
+
+                var universityList = _userUniversityRepo.FindByUserId(cn, userGetid);
+                user.universities = new List<University>();
+                foreach (var un in universityList)
+                    user.universities.Add(_universityRepo.FindById(cn, un));
+
+                if (user.occupation != null)
+                    user.occupation = _occupationRepo.FindById(cn, user.occupation.id);
+
+                return user;
+            }
+        }
+
+        public void StoreActivity(IEnumerable<UserGroupActivity> activities)
+        {
+            using (IDbConnection cn = new SQLiteConnection(_connectionString))
+            {
+                cn.Open();
+                using (var tran = cn.BeginTransaction())
+                {
+                    foreach (var act in activities)
+                    {
+                        _userGroupActivityRepo.Add(cn, act);
+                    }
+                    tran.Commit();
+                }
+            }
+        }
+
+        internal bool IsUserExist(int userGetId)
+        {
+            try
+            {
+                using (IDbConnection cn = new SQLiteConnection(_connectionString))
+                {
+                    cn.Open();
+                    return _userGetRepo.IsUserExist(cn, userGetId);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, ex.Message);
+                throw;
+            }
         }
     }
 }

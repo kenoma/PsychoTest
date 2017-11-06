@@ -22,10 +22,17 @@ namespace Psycho.Laborer
                 var log = kernel.Get<ILogger>();
                 log.Information("App started");
                 var _container = new NinjectContainerAdapter(kernel);
-                var _bus = _container.DeployMessageBus($"AnyLaborer");
-                _bus.Subscribe(typeof(MessageGetGroupLikesRepostsComments));
-                Console.ReadLine();
-                _bus.Unsubscribe(typeof(MessageGetGroupLikesRepostsComments));
+                using (var _bus = _container.DeployMessageBus($"AnyLaborer"))
+                {
+                    _bus.Subscribe(typeof(MessageExtractWallPostsCommand));
+                    _bus.Subscribe(typeof(MessageWallPostLikesRepostsComments));
+                    _bus.Subscribe(typeof(MessageUserGet));
+                    _bus.Publish(new MessageExtractWallPostsCommand { OwnerId = -29534144, PostCount = 100 });
+                    Console.ReadLine();
+                    _bus.Unsubscribe(typeof(MessageExtractWallPostsCommand));
+                    _bus.Unsubscribe(typeof(MessageWallPostLikesRepostsComments));
+                    _bus.Unsubscribe(typeof(MessageUserGet));
+                }
             }
         }
     }

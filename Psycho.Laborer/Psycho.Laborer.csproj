@@ -78,7 +78,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Config.settings</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\HandleGetGroupLikesRepostsComments.cs" />
+    <Compile Include="Handlers\HandleExtractWallPostsCommand.cs" />
+    <Compile Include="Handlers\HandleMessageUserGet.cs" />
+    <Compile Include="Handlers\HandleMessageWallPostLikesRepostsComments.cs" />
     <Compile Include="Infrastructure\IProxyProvider.cs" />
     <Compile Include="Infrastructure\ProxyProvider.cs" />
     <Compile Include="Infrastructure\UnitRequestor.cs" />
@@ -88,6 +90,9 @@
     <Compile Include="Repo\GeneralRepo.cs" />
     <Compile Include="Repo\PrivateRepos\IRepository.cs" />
     <Compile Include="Repo\PrivateRepos\MilitaryRepo.cs" />
+    <Compile Include="Repo\PrivateRepos\UserGroupActivityRepo.cs" />
+    <Compile Include="Repo\PrivateRepos\WallPostRepo.cs" />
+    <Compile Include="Repo\SpecialModel\ActivityType.cs" />
     <Compile Include="Repo\SpecialModel\MilitaryDb.cs" />
     <Compile Include="Repo\PrivateRepos\UserGroupsRepo.cs" />
     <Compile Include="Repo\PrivateRepos\CareerRepo.cs" />
@@ -101,9 +106,11 @@
     <Compile Include="Repo\SpecialModel\FriendsFollowersSubscriptions.cs" />
     <Compile Include="Repo\SpecialModel\RelativeDb.cs" />
     <Compile Include="Repo\SpecialModel\UserGetDb.cs" />
+    <Compile Include="Repo\SpecialModel\UserGroupActivity.cs" />
     <Compile Include="Repo\SpecialModel\UserGroups.cs" />
     <Compile Include="Repo\SpecialModel\UserSchool.cs" />
     <Compile Include="Repo\SpecialModel\UserUniversity.cs" />
+    <Compile Include="Repo\SpecialModel\WallPostDb.cs" />
     <Compile Include="Repo\SqliteHelpers.cs" />
     <Compile Include="Repo\PrivateRepos\Repository.cs" />
     <Compile Include="Repo\PrivateRepos\UserUniversity.cs" />

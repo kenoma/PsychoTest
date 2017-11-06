@@ -14,7 +14,7 @@ namespace Psycho.Common.Service
             return new LoggerConfiguration()
               .MinimumLevel.Verbose()
               .WriteTo.LiterateConsole()
-              .WriteTo.Seq(CommonConfig.Default.SeqServer, compact: true)
+              .WriteTo.Seq(config.Default.SeqServer, compact: true)
               .CreateLogger();
         }
     }

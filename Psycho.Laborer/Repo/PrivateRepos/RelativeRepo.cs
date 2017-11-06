@@ -51,5 +51,10 @@ namespace Psycho.Laborer.Repo
         {
             return _mapper.Map<RelativeDb>(item);
         }
+
+        internal Relative[] FindByUserId(IDbConnection cn, int userGetid)
+        {
+            return _mapper.Map<Relative[]>(cn.Query<RelativeDb>($"SELECT * FROM {_tableName} WHERE UserGetId=@Id", new { Id = userGetid }));
+        }
     }
 }
